@@ -4,12 +4,21 @@ body {
 }
 
 header {
-  padding: 20px 32px;
+  padding: 20px 24px;
   border-bottom: 1px solid #FFFFFF80;
   box-shadow: 0px 4px 8px 0px #FFFFFF33;
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+header > a {
+  flex-shrink: 0;
+}
+header > a img {
+  height: 28px;
 }
 
 header > #search {
@@ -25,11 +34,9 @@ header > #search {
 header > #search > input {
   width: 260px;
   font-family: "Roboto";
-  font-weight: 400;
   font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0%;
-
+  border: none;
+  outline: none;
 }
 
 main {
@@ -49,7 +56,7 @@ main > h4 {
 
 main > #movies {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 64px;
   margin-bottom: 64px;
 }
@@ -57,6 +64,7 @@ main > #movies {
 main > #movies > .movie > img {
   margin-bottom: 19px;
   border-radius: 15px;
+  width: 100%;
 }
 
 main > #movies > .movie > p {
@@ -103,7 +111,7 @@ main > #movies > .movie > div {
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,7 +166,7 @@ main > #movies > .movie > div {
   margin-bottom: 32px;
 }
 
-#modal > div > div > div > div > div {
+#modal .genres-voteaverage div {
   margin-right: 16px;
 }
 
@@ -197,4 +205,139 @@ main > #movies > .movie > div {
 
 .myVoteStar div:nth-child(1) {
   transform: scaleX(-1);
+}
+
+
+
+
+@media (max-width: 1280px) {
+  main {
+    padding: 64px 120px;
+  }
+  
+  header > #search input {
+    width: 200px;
+  }
+
+  main > #movies {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+
+  #modal > div {
+    width: 800px;
+    height: 580px;
+  }
+
+  #modal {
+    font-size: 16px;
+  }
+
+  #modal > div > div > img {
+    max-height: 400px;
+  }
+
+  #modal > div > div {
+    padding: 40px 30px;
+  }
+
+  .myVoteStar img {
+    height: 28px;
+  }
+}
+
+
+@media (max-width: 900px) {
+  main {
+    padding: 48px 64px;
+  }
+
+  header > #search input {
+    width: 160px;
+  }
+
+  main > #movies {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  #modal {
+    align-items: end;
+  }
+
+  #modal > div {
+    width: 100vw;
+    border-radius: 0;
+  }
+
+  #modal > div > div {
+    /* height: 510px; */
+    height: 480px;
+    overflow: scroll;
+  }
+
+  #modal > div > div > img {
+    display: none;
+  }
+}
+
+
+@media (max-width: 480px) {
+  main {
+    padding: 32px 16px;
+  }
+
+  header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  header > a {
+    align-self: center;
+  }
+
+  header > #search input {
+    display: none;
+  }
+
+  header.search-open {
+    gap: 0;
+  }
+
+  header.search-open > a {
+    display: none;
+  }
+
+  header.search-open > #search {
+    width: 100%;
+  }
+
+  header.search-open > #search input {
+    display: block;
+    width: 100%;
+  }
+
+  main > #movies {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .myVote {
+    font-size: 16px;
+  }
+  
+  .myVoteStar img {
+    height: 20px;
+  }
+}
+
+
+
+
+@supports (-webkit-appearance:none) and (stroke-color: transparent) {
+    body {
+        min-height: -webkit-fill-available;
+    }
 }

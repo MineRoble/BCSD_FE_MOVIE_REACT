@@ -13,6 +13,7 @@ function App() {
   const [getModalMovie, setModalMovie] = useState({});
   const [getH4, setH4] = useState("지금 인기있는 영화");
   const [getMyVote, setMyVote] = useState(0);
+  const [isMobileSearchOpen, setMobileSearchOpen] = useState(false);
   const searchRef = useRef();
 
   const getPopular = async () => {
@@ -72,18 +73,39 @@ function App() {
   useEffect(() => {
     getPopular();
   }, []);
+  
+  useEffect(() => {
+    if (isModalVisible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalVisible]);
 
   return (
     <>
-      <header>
-          <a href="./"><img src="/src/assets/logo.png" alt="Movielist" /></a>
+      <header className={isMobileSearchOpen ? "search-open" : ""}>
+          <a href="./">
+            <img src="/src/assets/logo.png" alt="Movielist" />
+          </a>
           <form id="search" onSubmit={(e) =>  {
             e.preventDefault();
             lastPage = 1;
             getSearch();
           }}>
-            <input type="text" name="query" id="searchQuery" placeholder="검색" ref={searchRef} />
-            <button id="btnSearch" role="submit"><img src="/src/assets/search.png" alt="검색" /></button>
+            <input type="text" name="query" id="searchQuery" placeholder="검색" ref={searchRef} onFocus={() => setMobileSearchOpen(true)} />
+            <button id="btnSearch" role="submit" onClick={(e) => {
+              if (window.innerWidth <= 480 && !isMobileSearchOpen) {
+                setMobileSearchOpen(true);
+                e.preventDefault();
+              }
+            }}>
+              <img src="/src/assets/search.png" alt="검색" />
+            </button>
           </form>
       </header>
       <main>
@@ -136,7 +158,7 @@ function App() {
             <div>
               <img alt="Poster" id="modalPoster" src={getModalMovie.poster}/>
               <div>
-                <div><div>{getModalMovie.genres}</div> <img src="/src/assets/star.png" alt="Star" /> {getModalMovie.vote_average}</div>
+                <div className="genres-voteaverage"><div>{getModalMovie.genres}</div> <img src="/src/assets/star.png" alt="Star" /> {getModalMovie.vote_average}</div>
                 <div id="modalOverview">{getModalMovie.overview}</div>
                 <div className="myVote">
                   <div>내 평점</div>
